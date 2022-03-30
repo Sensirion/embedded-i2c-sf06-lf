@@ -32,8 +32,8 @@ sf06_lf_test_hw_i2c: sf06_lf_i2c_test.cpp $(sf06_lf_sources) $(sensirion_test_so
 sf06_lf_test_sw_i2c: sf06_lf_i2c_test.cpp $(sf06_lf_sources) $(sensirion_test_sources) $(i2c_sources) $(sw_i2c_impl_src) $(common_sources)
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
-test: $()sf06_lf_test_binaries)
+test: $(sf06_lf_test_binaries)
 	set -ex; for test in $(sf06_lf_test_binaries); do echo $${test}; ./$${test}; echo; done;
 
 clean:
-	$(RM) $({)sf06_lf_test_binaries)
+	$(RM) $(sf06_lf_test_binaries)

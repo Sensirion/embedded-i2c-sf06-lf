@@ -43,29 +43,8 @@
 
 static uint8_t _i2c_address;
 
-// internal state
-
 void init_driver(uint8_t i2c_address) {
     _i2c_address = i2c_address;
-}
-
-int16_t signal_thermal_conductivity(int16_t raw_thermal_conductivity) {
-    int16_t thermal_conductivity = 0;
-    thermal_conductivity = raw_thermal_conductivity;
-    return thermal_conductivity;
-}
-
-int16_t sf06_lf_read_product_identifier(uint32_t* product_identifier,
-                                        uint8_t* serial_number,
-                                        uint16_t serial_number_size) {
-    int16_t local_error = 0;
-    local_error = sf06_lf_read_product_identifier_prepare();
-    if (local_error != NO_ERROR) {
-        return local_error;
-    }
-    local_error = ll_sf06_lf_read_product_identifier(
-        product_identifier, serial_number, serial_number_size);
-    return local_error;
 }
 
 int16_t sf06_lf_start_h2o_continuous_measurement() {
@@ -190,17 +169,26 @@ int16_t sf06_lf_enter_sleep() {
 }
 
 int16_t sf06_lf_exit_sleep() {
-    int16_t local_error = NO_ERROR;
     uint8_t local_buffer[2] = {0};
     uint16_t local_offset = 0;
     local_offset =
         sensirion_i2c_add_command_to_buffer(local_buffer, local_offset, 0x0);
-    local_error =
-        sensirion_i2c_write_data(_i2c_address, local_buffer, local_offset);
+    sensirion_i2c_write_data(_i2c_address, local_buffer, local_offset);
+    // not checking for error as write is not acknowledged on sensor wakeup
+    sensirion_i2c_hal_sleep_usec(25 * 1000);
+    return NO_ERROR;
+}
+
+int16_t sf06_lf_read_product_identifier(uint32_t* product_identifier,
+                                        uint8_t* serial_number,
+                                        uint16_t serial_number_size) {
+    int16_t local_error = 0;
+    local_error = sf06_lf_read_product_identifier_prepare();
     if (local_error != NO_ERROR) {
         return local_error;
     }
-    sensirion_i2c_hal_sleep_usec(25 * 1000);
+    local_error = ll_sf06_lf_read_product_identifier(
+        product_identifier, serial_number, serial_number_size);
     return local_error;
 }
 

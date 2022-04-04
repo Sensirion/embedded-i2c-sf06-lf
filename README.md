@@ -103,10 +103,6 @@ The current code is configured to run with a SLF3C-1300F, I2C address 0x08. In o
 use the code with another product you need to change the used I2C address in the call init_driver(ADDRESS) in
 `./sf06_lf_i2c_example_usage`. The list of supported I2C-addresses is found in the header `sf06_lf_i2c.h`.
 
-with the default address 0x08. In case you would like to use
-a different one you will need to change the I2C address in `./sf06_lf_i2c_example_usage`
-You find the list of supported I2C-addresses in the header `sf06_lf_i2c.h`.
-
 
 Now we are ready to compile and run the example usage for your sensor.
 

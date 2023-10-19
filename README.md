@@ -1,12 +1,10 @@
 # Sensirion I2C SF06-LF embedded Library
 
-This document explains how to set up a sensor of the SF06-LF sensor family to run on a embedded device
-using the provided code.
+This document explains how to set up a sensor of the SF06-LF family to run on an embedded device using the I²C interface.
 
-<center><img src="images/sensor_SLF3C_1300F.png" width="300px"></center>
+<img src="images/sensor_SLF3C_1300F.png" width="300px">
 
 Click [here](https://sensirion.com/products/product-categories/liquid-flow/) to learn more about the Sensirion SF06-LF sensor family.
-
 
 
 Not all sensors of this driver family support all measurements.
@@ -14,22 +12,20 @@ In case a measurement is not supported by all sensors, the products that
 support it are listed in the API description.
 
 
+
 ## Supported sensor types
 
-   - SLF3C-1300F
+| Sensor name   | I²C Addresses  |
+| ------------- | -------------- |
+|[SLF3C-1300F](https://sensirion.com/products/catalog/SLF3C-1300F/)| **0x08**|
+|[SLF3S-1300F](https://sensirion.com/products/catalog/SLF3S-1300F/)| **0x08**|
+|[SLF3S-0600F](https://sensirion.com/products/catalog/SLF3S-0600F/)| **0x08**|
+|[SLF3S-4000B](https://sensirion.com/products/catalog/SLF3S-4000B/)| **0x08**|
+|[LD20-0600L](https://sensirion.com/products/catalog/LD20-0600L/)| **0x08**|
+|[LD20-2600B](https://sensirion.com/products/catalog/LD20-2600B/)| **0x08**|
 
-   - SLF3S-1300F
-
-   - SLF3S-0600F
-
-   - SLF3S-4000B
-
-   - LD20-0600L
-
-   - LD20-2600B
-  
 The following instructions and examples use a *SLF3C-1300F*.
-Click [here](https://sensirion.com/media/documents/F3931025/621F8CCE/Sensirion_Liquid_Flow_Meters_SLF3C-1300F_Datasheet.pdf) to download the datasheet.
+
 
 
 ## Setup Guide
@@ -43,12 +39,12 @@ Use the following pins to connect your SF06-LF:
 
 | *Pin* | *Cable Color* | *Name* | *Description*  | *Comments* |
 |-------|---------------|:------:|----------------|------------|
-| 1 |  |NC | Do not connect | 
-| 2 | green |SDA | I2C: Serial data input / output | 
-| 3 | red |VDD | Supply Voltage | 3.2 to 3.8V
-| 4 | black |GND | Ground | 
-| 5 | yellow |SCL | I2C: Serial clock input | 
-| 6 |  |NC | Do not connect | 
+| 1 |  | NC | Do not connect | 
+| 2 | green | SDA | I2C: Serial data input / output | 
+| 3 | red | VDD | Supply Voltage | 3.2V to 3.8V
+| 4 | black | GND | Ground | 
+| 5 | yellow | SCL | I2C: Serial clock input | 
+| 6 |  | NC | Do not connect | 
 
 
 
@@ -99,9 +95,10 @@ detailed template where you just need to fill in your system specific values.
 
 ## Choose the i2c address to use with your product
 
-The current code is configured to run with a SLF3C-1300F, I2C address 0x08. In order to 
-use the code with another product you need to change the used I2C address in the call init_driver(ADDRESS) in
-`./sf06_lf_i2c_example_usage`. The list of supported I2C-addresses is found in the header `sf06_lf_i2c.h`.
+The provided example is working with a SLF3C-1300F, I²C address 0x08.
+In order to use the code with another product or I²C address you need to change it in the call sf06_lf_init(ADDRESS) in
+`sf06_lf_i2c_example_usage.c`. The list of supported I²C-addresses is found in the header 
+`sf06_lf_i2c.h`.
 
 
 Now we are ready to compile and run the example usage for your sensor.
@@ -114,11 +111,26 @@ Here we demonstrate the procedure for Linux based platforms:
 
 1. Open up a terminal.
 2. Navigate to the directory where this README is located.
-3. Run `make` (this compiles the example code into one executable binary).
-4. Run the compiled executable with `./sf06_lf_i2c_example_usage`
-5. Now you should see the first measurement values appear in your terminal. As
+3. Navigate to the subdirectory example-usage.
+4. Run `make` (this compiles the example code into one executable binary).
+5. Run the compiled executable with `./sf06_lf_i2c_example_usage`
+6. Now you should see the first measurement values appear in your terminal. As
    a next step you can adjust the example usage file or write your own main
    function to use the sensor.
+
+## Compile and Run Tests
+
+The testframekwork used is CppUTest. Pass the source `.cpp`, `.c`  and header `.h`
+files from the tests and top level folder into your CPP compiler and run the
+resulting binary. This step may vary, depending on your platform.
+Here we demonstrate the procedure for Linux based platforms:
+
+1. Open up a terminal.
+2. Install CppUTest framework `apt install cpputest`.
+3. Navigate to the directory `tests`.
+4. Run `make` (this compiles the test code into one executable binary).
+5. Run the compiled executable with `./sf06_lf_test_hw_i2c`.
+6. Now you should see the test output on your console.
 
 # Background
 

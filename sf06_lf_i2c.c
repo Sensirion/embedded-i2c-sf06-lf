@@ -51,12 +51,6 @@ void sf06_lf_init(uint8_t i2c_address) {
     _i2c_address = i2c_address;
 }
 
-int16_t signal_thermal_conductivity(int16_t raw_thermal_conductivity) {
-    int16_t thermal_conductivity = 0;
-    thermal_conductivity = raw_thermal_conductivity;
-    return thermal_conductivity;
-}
-
 int16_t sf06_lf_read_product_identifier(uint32_t* product_identifier,
                                         uint8_t* serial_number,
                                         uint16_t serial_number_size) {

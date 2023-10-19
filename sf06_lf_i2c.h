@@ -81,15 +81,6 @@ typedef enum {
 void sf06_lf_init(uint8_t i2c_address);
 
 /**
- * @brief signal_thermal_conductivity
- *
- * @param[in] raw_thermal_conductivity
- *
- * @return thermal conductivity in arbitary unit
- */
-int16_t signal_thermal_conductivity(int16_t raw_thermal_conductivity);
-
-/**
  * @brief sf06_lf_read_product_identifier
  *
  * Read product identifier and the serial number. The command can only be

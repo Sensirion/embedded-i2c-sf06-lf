@@ -102,6 +102,11 @@ TEST (SF06_LF_Tests,
         local_error, "start_single_thermal_conductivity_measurement_async");
     local_error = sf06_lf_read_thermal_conductivity_measurement_data(
         &thermal_conductivity, &raw_temperature, &raw_delta_temperature);
+    CHECK_EQUAL_TEXT(-1, local_error,
+                     "read_thermal_conductivity_measurement_data");
+    sensirion_i2c_hal_sleep_usec(2300 * 1000);
+    local_error = sf06_lf_read_thermal_conductivity_measurement_data(
+        &thermal_conductivity, &raw_temperature, &raw_delta_temperature);
     CHECK_EQUAL_ZERO_TEXT(local_error,
                           "read_thermal_conductivity_measurement_data");
     printf("thermal_conductivity: %i ", thermal_conductivity);
